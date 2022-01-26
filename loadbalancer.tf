@@ -1,5 +1,5 @@
 resource "digitalocean_loadbalancer" "k3s_lb" {
-  name     = "k3s-api-loadbalancer"
+  name     = "k3s-api-loadbalancer-${var.k3s_cluster_name}"
   region   = var.region
   vpc_uuid = digitalocean_vpc.k3s_vpc.id
 
