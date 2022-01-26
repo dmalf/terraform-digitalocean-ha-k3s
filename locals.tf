@@ -10,8 +10,8 @@ locals {
 
   db_cluster_uri = var.database_engine == "postgres" ? local.postgres_uri : local.mysql_uri
 
-  server_droplet_tag = "k3s_server"
-  agent_droplet_tag  = "k3s_agent"
+  server_droplet_tag = "k3s_server-${var.k3s_cluster_name}"
+  agent_droplet_tag  = "k3s_agent-${var.k3s_cluster_name}"
   ccm_fw_tags        = var.server_taint_criticalonly == false ? join(",", [local.server_droplet_tag, local.agent_droplet_tag]) : local.agent_droplet_tag
 
   critical_addons_only_true = "--node-taint \"CriticalAddonsOnly=true:NoExecute\" \\"
