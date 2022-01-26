@@ -127,6 +127,12 @@ variable "sys_upgrade_ctrl" {
   default     = false
 }
 
+variable "k3s_cluster_name" {
+  type        = string
+  description = "cluster name - also used to distinguish uniquely named resources to avoid collisions"
+ 
+}
+
 variable "ingress" {
   type        = string
   description = "Ingress controller to install"
