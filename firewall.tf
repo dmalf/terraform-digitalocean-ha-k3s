@@ -1,5 +1,5 @@
 resource "digitalocean_firewall" "ccm_firewall" {
-  name = "ccm-firewall"
+  name = "ccm-firewall-${var.k3s_cluster_name}"
 
   outbound_rule {
     protocol              = "icmp"
@@ -8,7 +8,7 @@ resource "digitalocean_firewall" "ccm_firewall" {
 }
 
 resource "digitalocean_firewall" "k3s_firewall" {
-  name = "k3s-firewall"
+  name = "k3s-firewall-${var.k3s_cluster_name}"
 
   tags = [local.server_droplet_tag, local.agent_droplet_tag]
 
