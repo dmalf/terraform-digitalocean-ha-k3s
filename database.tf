@@ -4,7 +4,7 @@ resource "digitalocean_database_user" "dbuser" {
 }
 
 resource "digitalocean_database_cluster" "k3s" {
-  name                 = "k3s-ext-datastore"
+  name                 = "k3s-ext-datastore-${var.k3s_cluster_name}"
   engine               = var.database_engine == "postgres" ? "pg" : "mysql"
   version              = var.database_engine == "postgres" ? "11" : "8"
   size                 = var.database_size
