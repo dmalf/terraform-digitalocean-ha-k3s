@@ -16,7 +16,7 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=${k3s_channel} K3S_TOKEN=${k3
     ${critical_taint}
     --kubelet-arg "provider-id=digitalocean://$DROPLET_ID" \
     --flannel-backend=${flannel_backend} \
-    --flannel-iface=eth1 \
+    --flannel-iface=eth0 \
     --disable local-storage \
     --disable-cloud-controller \
     --disable traefik \
