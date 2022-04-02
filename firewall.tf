@@ -38,6 +38,12 @@ resource "digitalocean_firewall" "k3s_firewall" {
     port_range       = "22"
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
+  inbound_rule {
+    # Allow K8s access from all hosts
+    protocol         = "tcp"
+    port_range       = "6443"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
 
   outbound_rule {
     protocol              = "udp"
