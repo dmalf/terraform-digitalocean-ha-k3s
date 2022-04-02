@@ -18,7 +18,8 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=${k3s_channel} K3S_TOKEN=${k3
     --kubelet-arg "provider-id=digitalocean://$DROPLET_ID" \
     --flannel-backend=${flannel_backend} \
     --flannel-iface=eth0 \
-    --node-ip $DROPLET_PUBLIC_ADDRESS \
+    --node-ip=$DROPLET_PUBLIC_ADDRESS \
+    --node-external-ip=$DROPLET_PUBLIC_ADDRESS \ 
     --disable local-storage \
     --disable-cloud-controller \
     --disable traefik \
