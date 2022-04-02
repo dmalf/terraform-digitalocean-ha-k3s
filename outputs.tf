@@ -1,7 +1,7 @@
 output "cluster_summary" {
   description = "Cluster Summary."
   value = {
-    #cluster_version : local.k3s_version
+    cluster_version : local.k3s_version
     cluster_region : var.region
     api_server_ip : digitalocean_loadbalancer.k3s_lb.ip
     servers : local.merged_servers
