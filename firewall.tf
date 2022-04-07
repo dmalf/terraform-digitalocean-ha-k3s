@@ -29,7 +29,7 @@ resource "digitalocean_firewall" "k3s_firewall" {
     # Allow UDP communication on all ports to defined 'tags' via VPC Network
     protocol         = "udp"
     port_range       = "1-65535"
-    source_addresses = [var.vpc_network_range]
+    source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   inbound_rule {
