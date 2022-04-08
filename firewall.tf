@@ -17,6 +17,20 @@ resource "digitalocean_firewall" "k3s_firewall" {
     protocol         = "icmp"
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
+  
+  inbound_rule {
+    # Allow web traffic
+    protocol         = "tcp"
+    port             = "80"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  
+   inbound_rule {
+    # Allow secure web traffic
+    protocol         = "tcp"
+    port             = "443"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
 
   inbound_rule {
     # Allow TCP communication on all ports to defined 'tags' via VPC Network
