@@ -1740,9 +1740,14 @@ spec:
         container.apparmor.security.beta.kubernetes.io/traefik: runtime/default
     spec:
       serviceAccountName: traefik-ingress-controller
+      #add storage for acme
+      volumes:
+      - name: vol-lluxl
+        persistentVolumeClaim:
+          claimName: letsencrypt
       containers:
         - name: traefik
-          image: traefik:v2.5.3
+          image: traefik:v2.6
           args:
             - --api.dashboard
             - --accesslog
@@ -1764,6 +1769,14 @@ spec:
             # - --entrypoints.web.http.redirections.entrypoint.scheme=https
             - --providers.kubernetescrd
             - --providers.kubernetesingress
+            #added to watch ingresses to work with external dns
+            - --providers.kubernetesingress
+            - --providers.kubernetesingress.ingressendpoint.publishedservice=kube-system/traefik
+            #Acme setup
+            - --certificatesresolvers.myresolver.acme.tlschallenge
+            - --certificatesresolvers.myresolver.acme.email=dommalfara@gmail.com
+            - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+            - --certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
             #- --certificatesresolvers.godaddy.acme.email=me@mydomain.io
             #- --certificatesresolvers.godaddy.acme.storage=/etc/traefik/certs/acme.json
             #- --certificatesResolvers.godaddy.acme.dnsChallenge.provider=godaddy
@@ -1773,12 +1786,15 @@ spec:
             # - --certificatesresolvers.godaddy.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
             - --log
             - --log.level=INFO
+          volumeMounts:
+          - mountPath: /letsencrypt/
+            name: vol-lluxl
           securityContext:
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            # Run the container as nobody:nogroup
-            runAsUser: 65534
-            runAsGroup: 65534
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            # Run the container so that mount can be accessed for ACME
+            runAsUser: 0
+            runAsGroup: 0
             capabilities:
               drop:
                 - ALL
